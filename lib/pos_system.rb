@@ -1,6 +1,15 @@
 class POSSystem
 
+  attr_accessor :prices
+
+  def initialize
+    @prices = {
+        soup: 1.89,
+        crackers: 1.99
+    }
+  end
+
   def cost(item)
-    0.2
+    @prices[item]
   end
 end
