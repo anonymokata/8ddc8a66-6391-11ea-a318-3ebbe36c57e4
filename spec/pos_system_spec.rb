@@ -63,4 +63,22 @@ describe POSSystem do
     @system.scan_item 'soup'
     expect(@system.current_total).to eq 1.69
   end
+
+  it 'should keep track of items currently scanned in' do
+    @system.scan_item 'soup'
+    current_items = { soup: 1 }
+    expect(@system.current_items).to eq current_items
+    @system.scan_item 'soup'
+    current_items = { soup: 2 }
+    expect(@system.current_items).to eq current_items
+  end
+
+  it 'should keep track of the weight of items currently scanned in' do
+    @system.scan_item 'beef', 2
+    current_items = { beef: 2 }
+    expect(@system.current_items).to eq current_items
+    @system.scan_item 'beef', 1.5
+    current_items = { beef: 3.5 }
+    expect(@system.current_items).to eq current_items
+  end
 end

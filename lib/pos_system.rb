@@ -1,10 +1,11 @@
 class POSSystem
 
-  attr_reader :items, :current_total
+  attr_reader :items, :current_total, :current_items
 
   def initialize
     @items = {}
     @current_total = 0
+    @current_items = Hash.new 0
   end
 
   def sold_by_weight?(item_name)
@@ -29,6 +30,7 @@ class POSSystem
   end
 
   def scan_item(item_name, weight = 0)
+    current_items[item_name.to_sym] += (weight == 0 ? 1 : weight)
     @current_total += cost item_name, weight
   end
 
