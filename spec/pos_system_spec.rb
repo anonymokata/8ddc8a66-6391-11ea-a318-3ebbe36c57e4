@@ -4,22 +4,21 @@ describe POSSystem do
 
   before(:each) do
     @system = POSSystem.new
+    @system.set_cost'soup', 1.89
+    @system.set_cost'crackers', 1.99
+    @system.set_cost 'beef', 5.99, true
   end
 
   it 'should return the cost of an item' do
-    @system.set_cost'soup', 1.89
-    @system.set_cost'crackers', 1.99
     expect(@system.cost('soup')). to eq 1.89
     expect(@system.cost('crackers')). to eq 1.99
   end
 
   it 'should return the cost of an item sold by weight' do
-    cost_per_lb = 5.99
-    @system.set_cost 'beef', cost_per_lb, true
-    expect(@system.cost('beef', 1)). to eq cost_per_lb * 1
-    expect(@system.cost('beef', 2)). to eq cost_per_lb * 2
-    expect(@system.cost('beef', 0.5)). to eq cost_per_lb * 0.5
-    expect(@system.cost('beef', 1.5)). to eq cost_per_lb * 1.5
+    expect(@system.cost('beef', 1)). to eq 5.99 * 1
+    expect(@system.cost('beef', 2)). to eq 5.99 * 2
+    expect(@system.cost('beef', 0.5)). to eq 5.99 * 0.5
+    expect(@system.cost('beef', 1.5)). to eq 5.99 * 1.5
   end
 
   it 'should allow you to set the cost of an item' do
@@ -28,7 +27,6 @@ describe POSSystem do
   end
 
   it 'should allow you to set if an item is sold by weight' do
-    @system.set_cost'beef', 5.99, true
     expect(@system.sold_by_weight?('beef')). to be true
   end
 
@@ -37,13 +35,11 @@ describe POSSystem do
   end
 
   it 'should increase current total when an item is scanned in' do
-    @system.set_cost'soup', 1.89
     @system.scan_item('soup')
     expect(@system.current_total). to eq 1.89
   end
 
   it 'should increase current total when an item is scanned in with a weight' do
-    @system.set_cost 'beef', 5.99, true
     @system.scan_item 'beef', 2
     expect(@system.current_total).to eq 11.98
   end
