@@ -35,6 +35,7 @@ class POSSystem
   end
 
   def remove_item(item_name, weight = 0)
+    current_items[item_name.to_sym] -= 1
     @current_total -= cost item_name, weight
   end
 
