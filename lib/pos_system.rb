@@ -12,4 +12,8 @@ class POSSystem
   def cost(item)
     @prices[item]
   end
+
+  def set_cost(item, price)
+    @prices[item] = price
+  end
 end
