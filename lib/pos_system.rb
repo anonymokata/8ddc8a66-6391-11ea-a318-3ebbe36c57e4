@@ -21,7 +21,7 @@ class POSSystem
     @items[item_name.to_sym] = { price: price, sold_by_weight: sold_by_weight }
   end
 
-  def scan_item(item_name)
-    @current_total += cost item_name
+  def scan_item(item_name, weight = 0)
+    @current_total += cost item_name, weight
   end
 end

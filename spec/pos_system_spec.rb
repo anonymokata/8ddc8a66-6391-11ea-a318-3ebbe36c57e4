@@ -41,4 +41,10 @@ describe POSSystem do
     @system.scan_item('soup')
     expect(@system.current_total). to eq 1.89
   end
+
+  it 'should increase current total when an item is scanned in with a weight' do
+    @system.set_cost 'beef', 5.99, true
+    @system.scan_item 'beef', 2
+    expect(@system.current_total).to eq 11.98
+  end
 end
