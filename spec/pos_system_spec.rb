@@ -9,13 +9,13 @@ describe POSSystem do
 
   it 'should allow you to set the cost of an item' do
     system = POSSystem.new
-    system.set_cost('soup', 1.00)
+    system.set_cost'soup', 1.00
     expect(system.cost('soup')). to eq 1.00
   end
 
   it 'should allow you to set if an item is sold by weight' do
     system = POSSystem.new
-    system.set_cost('beef', 5.99, true)
-    expect(system.items[:beef][:sold_by_weight]). to be true
+    system.set_cost'beef', 5.99, true
+    expect(system.sold_by_weight?('beef')). to be true
   end
 end
