@@ -3,10 +3,7 @@ class POSSystem
   attr_reader :items
 
   def initialize
-    @items = {
-        soup:     { price: 1.89 },
-        crackers: { price: 1.99 }
-    }
+    @items = {}
   end
 
   def sold_by_weight?(item_name)
