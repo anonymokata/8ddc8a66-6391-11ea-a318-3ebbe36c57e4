@@ -35,4 +35,10 @@ describe POSSystem do
   it 'should start with a current total of 0' do
     expect(@system.current_total). to eq 0
   end
+
+  it 'should increase current total when an item is scanned in' do
+    @system.set_cost'soup', 1.89
+    @system.scan_item('soup')
+    expect(@system.current_total). to eq 1.89
+  end
 end
