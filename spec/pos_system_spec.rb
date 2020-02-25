@@ -57,4 +57,10 @@ describe POSSystem do
     @system.remove_item 'beef', 1
     expect(@system.current_total).to eq 0
   end
+
+  it 'should allow you to markdown an item' do
+    @system.markdown_item 'soup', 0.20
+    @system.scan_item 'soup'
+    expect(@system.current_total).to eq 1.69
+  end
 end
