@@ -30,12 +30,12 @@ class POSSystem
   end
 
   def scan_item(item_name, weight = 0)
-    current_items[item_name.to_sym] += (weight == 0 ? 1 : weight)
+    current_items[item_name.to_sym] += (weight.zero? ? 1 : weight)
     @current_total += cost item_name, weight
   end
 
   def remove_item(item_name, weight = 0)
-    current_items[item_name.to_sym] -= 1
+    current_items[item_name.to_sym] -= (weight.zero? ? 1 : weight)
     @current_total -= cost item_name, weight
   end
 

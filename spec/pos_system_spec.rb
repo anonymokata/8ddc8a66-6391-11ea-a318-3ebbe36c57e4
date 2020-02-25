@@ -91,4 +91,14 @@ describe POSSystem do
     current_items = { soup: 1 }
     expect(@system.current_items).to eq current_items
   end
+
+  it 'should keep track of the weight of items currently scanned in when some is removed' do
+    @system.scan_item 'beef', 1
+    @system.scan_item 'beef', 2.5
+    current_items = { beef: 3.5 }
+    expect(@system.current_items).to eq current_items
+    @system.remove_item 'beef', 2
+    current_items = { beef: 1.5 }
+    expect(@system.current_items).to eq current_items
+  end
 end
