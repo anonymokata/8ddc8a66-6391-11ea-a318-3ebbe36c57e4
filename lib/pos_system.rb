@@ -1,9 +1,10 @@
 class POSSystem
 
-  attr_reader :items
+  attr_reader :items, :current_total
 
   def initialize
     @items = {}
+    @current_total = 0
   end
 
   def sold_by_weight?(item_name)

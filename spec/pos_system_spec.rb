@@ -30,4 +30,9 @@ describe POSSystem do
     system.set_cost'beef', 5.99, true
     expect(system.sold_by_weight?('beef')). to be true
   end
+
+  it 'should start with a current total of 0' do
+    system = POSSystem.new
+    expect(system.current_total). to eq 0
+  end
 end
