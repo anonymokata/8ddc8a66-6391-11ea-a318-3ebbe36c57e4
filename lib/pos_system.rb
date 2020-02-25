@@ -1,6 +1,6 @@
 class POSSystem
 
-  attr_accessor :items
+  attr_reader :items
 
   def initialize
     @items = {
@@ -13,7 +13,7 @@ class POSSystem
     @items[item_name.to_sym][:price]
   end
 
-  def set_cost(item_name, price)
-    @items[item_name.to_sym] = { price: price }
+  def set_cost(item_name, price, sold_by_weight = false)
+    @items[item_name.to_sym] = { price: price, sold_by_weight: sold_by_weight }
   end
 end
