@@ -13,7 +13,9 @@ class POSSystem
     @items[item_name.to_sym][:sold_by_weight]
   end
 
-  def cost(item_name)
+  def cost(item_name, weight = 0)
+    return @items[item_name.to_sym][:price] * weight if sold_by_weight? item_name
+
     @items[item_name.to_sym][:price]
   end
 
