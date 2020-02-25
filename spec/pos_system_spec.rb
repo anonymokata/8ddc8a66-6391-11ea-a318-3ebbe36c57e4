@@ -43,4 +43,11 @@ describe POSSystem do
     @system.scan_item 'beef', 2
     expect(@system.current_total).to eq 11.98
   end
+
+  it 'should allow you to remove an item, correcting the current total' do
+    @system.scan_item 'soup'
+    expect(@system.current_total).to eq 1.89
+    @system.remove_item 'soup'
+    expect(@system.current_total).to eq 0
+  end
 end
