@@ -128,5 +128,11 @@ describe POSSystem do
     expect(@system.current_total).to eq 3.78
     @system.scan_item 'soup'
     expect(@system.current_total).to eq 5.00
+    @system.scan_item 'soup'
+    expect(@system.current_total).to eq 6.89
+    @system.scan_item 'soup'
+    expect(@system.current_total).to eq 8.78
+    @system.scan_item 'soup'
+    expect(@system.current_total).to eq 10.00
   end
 end

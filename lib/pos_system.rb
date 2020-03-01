@@ -50,10 +50,10 @@ class POSSystem
   end
 
   def calculate_special_cost(item_name, amount)
-    if amount == specials[item_name][:n_for_x][:n]
-      return specials[item_name][:n_for_x][:x]
-    end
-    item_cost(item_name) * amount
+    qualifying_specials = amount / specials[item_name][:n_for_x][:n]
+    remaining_items = amount % specials[item_name][:n_for_x][:n]
+
+    qualifying_specials * specials[item_name][:n_for_x][:x] + remaining_items * item_cost(item_name)
   end
 
   def calculate_current_total
