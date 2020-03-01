@@ -50,10 +50,21 @@ class POSSystem
   end
 
   def calculate_special_cost(item_name, amount)
-    qualifying_specials = amount / specials[item_name][:n_for_x][:n]
-    remaining_items = amount % specials[item_name][:n_for_x][:n]
+    special_type, parameters = specials[item_name].first
 
-    qualifying_specials * specials[item_name][:n_for_x][:x] + remaining_items * item_cost(item_name)
+    case special_type
+    when :n_for_x
+      return calculate_special_n_for_x item_name, amount, parameters
+    else
+      raise "Special Type [#{special_type}] Not Currently Supported!"
+    end
+  end
+
+  def calculate_special_n_for_x(item_name, amount, parameters)
+    qualifying_specials = amount / parameters[:n]
+    remaining_items = amount % parameters[:n]
+
+    qualifying_specials * parameters[:x] + remaining_items * item_cost(item_name)
   end
 
   def calculate_current_total
