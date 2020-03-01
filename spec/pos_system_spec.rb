@@ -135,4 +135,31 @@ describe POSSystem do
     @system.scan_item 'soup'
     expect(@system.current_total).to eq 10.00
   end
+
+  it 'should support a special in the form of Buy N items get M at %X off with and without a limit and calculate the total accordingly' do
+    @system.set_cost 'soup', 1.00
+    @system.set_special 'soup', :n_get_m_at_x_off, { n: 2, m: 1, x: 0.50 }
+    @system.scan_item 'soup'
+    expect(@system.current_total).to eq 1.00
+    @system.scan_item 'soup'
+    expect(@system.current_total).to eq 2.00
+    @system.scan_item 'soup'
+    expect(@system.current_total).to eq 2.50
+    @system.scan_item 'soup'
+    expect(@system.current_total).to eq 3.50
+    @system.scan_item 'soup'
+    expect(@system.current_total).to eq 4.50
+    @system.scan_item 'soup'
+    expect(@system.current_total).to eq 5.00
+    @system.scan_item 'soup'
+    expect(@system.current_total).to eq 6.00
+    @system.scan_item 'soup'
+    expect(@system.current_total).to eq 7.00
+    @system.scan_item 'soup'
+    expect(@system.current_total).to eq 7.50
+
+    @system.set_special 'soup', :n_get_m_at_x_off, { n: 2, m: 1, x: 0.50, limit: 6 }
+    @system.calculate_current_total
+    expect(@system.current_total).to eq 8.00
+  end
 end

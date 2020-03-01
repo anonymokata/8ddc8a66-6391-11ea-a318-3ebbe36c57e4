@@ -55,6 +55,8 @@ class POSSystem
     case special_type
     when :n_for_x
       return calculate_special_n_for_x item_name, amount, parameters
+    when :n_get_m_at_x_off
+      return calculate_special_n_get_m_at_x_off item_name, amount, parameters
     else
       raise "Special Type [#{special_type}] Not Currently Supported!"
     end
@@ -65,6 +67,23 @@ class POSSystem
     remaining_items = amount % parameters[:n]
 
     qualifying_specials * parameters[:x] + remaining_items * item_cost(item_name)
+  end
+
+  def calculate_special_n_get_m_at_x_off(item_name, amount, parameters)
+    amount_over_limit = 0
+    unless parameters[:limit].nil?
+      amount_over_limit = amount - parameters[:limit]
+      amount = parameters[:limit]
+    end
+
+    qualifying_specials = amount / (parameters[:n] + parameters[:m])
+    remaining_items = amount % (parameters[:n] + parameters[:m]) + amount_over_limit
+
+    full_priced_items = qualifying_specials * parameters[:n] + remaining_items
+    discounted_items = qualifying_specials * parameters[:m]
+
+    cost = full_priced_items * item_cost(item_name) + discounted_items * item_cost(item_name) * (1 - parameters[:x])
+    cost.round 2
   end
 
   def calculate_current_total
