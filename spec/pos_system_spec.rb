@@ -10,8 +10,8 @@ describe POSSystem do
   end
 
   it 'should return the cost of an item' do
-    expect(@system.cost('soup')). to eq 1.89
-    expect(@system.cost('crackers')). to eq 1.99
+    expect(@system.cost('soup', 1)). to eq 1.89
+    expect(@system.cost('crackers', 1)). to eq 1.99
   end
 
   it 'should return the cost of an item sold by weight' do
@@ -23,7 +23,7 @@ describe POSSystem do
 
   it 'should allow you to set the cost of an item' do
     @system.set_cost'soup', 1.00
-    expect(@system.cost('soup')). to eq 1.00
+    expect(@system.cost('soup', 1)). to eq 1.00
   end
 
   it 'should allow you to set if an item is sold by weight' do
@@ -37,6 +37,8 @@ describe POSSystem do
   it 'should increase current total when an item is scanned in' do
     @system.scan_item('soup')
     expect(@system.current_total). to eq 1.89
+    @system.scan_item('soup')
+    expect(@system.current_total). to eq 3.78
   end
 
   it 'should increase current total when an item is scanned in with a weight' do

@@ -19,10 +19,8 @@ class POSSystem
     item[:price]
   end
 
-  def cost(item_name, weight = 0)
-    return item_cost(item_name) * weight if sold_by_weight? item_name
-
-    item_cost item_name
+  def cost(item_name, amount)
+    item_cost(item_name) * amount
   end
 
   def set_cost(item_name, price, sold_by_weight = false)
