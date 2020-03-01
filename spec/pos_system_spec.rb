@@ -107,16 +107,26 @@ describe POSSystem do
   it 'should allow you to set a special in the form of N for $X' do
     @system.set_special 'soup', :n_for_x, { n: 3, x: 5 }
     special = { n_for_x: { n: 3, x: 5 } }
-    expect(@system.specials['soup']).to eq special
+    expect(@system.specials[:soup]).to eq special
   end
 
   it 'should allow you to set a special in the form of Buy N items get M at %X off with and without a limit' do
     @system.set_special 'soup', :n_get_m_at_x_off, { n: 2, m: 1, x: 0.50 }
     special = { n_get_m_at_x_off: { n: 2, m: 1, x: 0.50 } }
-    expect(@system.specials['soup']).to eq special
+    expect(@system.specials[:soup]).to eq special
 
     @system.set_special 'soup', :n_get_m_at_x_off, { n: 2, m: 1, x: 0.50, limit: 6 }
     special = { n_get_m_at_x_off: { n: 2, m: 1, x: 0.50, limit: 6 } }
-    expect(@system.specials['soup']).to eq special
+    expect(@system.specials[:soup]).to eq special
+  end
+
+  it 'should support a special in the form of N for $X and calculate total accordingly' do
+    @system.set_special 'soup', :n_for_x, { n: 3, x: 5 }
+    @system.scan_item 'soup'
+    expect(@system.current_total).to eq 1.89
+    @system.scan_item 'soup'
+    expect(@system.current_total).to eq 3.78
+    @system.scan_item 'soup'
+    expect(@system.current_total).to eq 5.00
   end
 end

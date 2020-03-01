@@ -21,6 +21,8 @@ class POSSystem
   end
 
   def cost(item_name, amount)
+    return calculate_special_cost(item_name, amount) if specials.has_key? item_name
+
     item_cost(item_name) * amount
   end
 
@@ -44,7 +46,14 @@ class POSSystem
   end
 
   def set_special(item_name, special_type, parameters)
-    @specials[item_name] = { special_type => parameters }
+    @specials[item_name.to_sym] = { special_type => parameters }
+  end
+
+  def calculate_special_cost(item_name, amount)
+    if amount == specials[item_name][:n_for_x][:n]
+      return specials[item_name][:n_for_x][:x]
+    end
+    item_cost(item_name) * amount
   end
 
   def calculate_current_total
