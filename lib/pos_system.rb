@@ -1,9 +1,10 @@
 class POSSystem
 
-  attr_accessor :items, :current_total, :current_items
+  attr_accessor :items, :current_total, :current_items, :specials
 
   def initialize
     @items = {}
+    @specials = {}
     @current_total = 0
     @current_items = Hash.new 0
   end
@@ -40,6 +41,10 @@ class POSSystem
 
   def markdown_item(item_name, markdown)
     items[item_name.to_sym][:markdown] = markdown
+  end
+
+  def set_special(item_name, special_type, parameters)
+    @specials[item_name] = { special_type => parameters }
   end
 
   def calculate_current_total
