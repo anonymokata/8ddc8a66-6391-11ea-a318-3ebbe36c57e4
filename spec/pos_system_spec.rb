@@ -162,4 +162,15 @@ describe POSSystem do
     @system.calculate_current_total
     expect(@system.current_total).to eq 8.00
   end
+
+  it 'should support removing an item that invalidates a special and modify the current total' do
+    @system.set_special 'soup', :n_for_x, { n: 3, x: 5 }
+    @system.set_cost 'soup', 2.00
+    @system.scan_item 'soup'
+    @system.scan_item 'soup'
+    @system.scan_item 'soup'
+    expect(@system.current_total).to eq 5
+    @system.remove_item 'soup'
+    expect(@system.current_total).to eq 4
+  end
 end
