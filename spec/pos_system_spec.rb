@@ -54,9 +54,9 @@ describe POSSystem do
   end
 
   it 'should allow you to remove an item with weight, correcting the current total' do
-    @system.scan_item 'beef', 1
-    expect(@system.current_total).to eq 5.99
-    @system.remove_item 'beef', 1
+    @system.scan_item 'beef', 1.26
+    expect(@system.current_total).to eq 7.55
+    @system.remove_item 'beef', 1.26
     expect(@system.current_total).to eq 0
   end
 
@@ -172,5 +172,26 @@ describe POSSystem do
     expect(@system.current_total).to eq 5
     @system.remove_item 'soup'
     expect(@system.current_total).to eq 4
+  end
+
+  it 'should allow you to set a special in the form of Buy N lbs get M lbs for %X off' do
+    @system.set_special 'beef', :n_get_m_at_x_off, { n: 2, m: 1, x: 0.50 }
+    special = { n_get_m_at_x_off: { n: 2, m: 1, x: 0.50 } }
+    expect(@system.specials[:beef]).to eq special
+  end
+
+  it 'should support a special in the form of Buy N lbs get M lbs for %X off with and without a limit and calculate the total accordingly' do
+    @system.set_cost 'beef', 1.00, true
+    @system.set_special 'beef', :n_get_m_at_x_off, { n: 2, m: 1, x: 0.50 }
+    @system.scan_item 'beef', 1.26
+    expect(@system.current_total).to eq 1.26
+    @system.scan_item 'beef', 0.74
+    expect(@system.current_total).to eq 2.00
+    @system.scan_item 'beef', 4.26
+    expect(@system.current_total).to eq 5.26
+
+    @system.set_special 'beef', :n_get_m_at_x_off, { n: 2, m: 1, x: 0.50, limit: 3 }
+    @system.calculate_current_total
+    expect(@system.current_total).to eq 5.76
   end
 end

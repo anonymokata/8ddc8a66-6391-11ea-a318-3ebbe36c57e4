@@ -76,20 +76,19 @@ class POSSystem
       amount = parameters[:limit]
     end
 
-    qualifying_specials = amount / (parameters[:n] + parameters[:m])
+    qualifying_specials = (amount / (parameters[:n] + parameters[:m])).to_i
     remaining_items = amount % (parameters[:n] + parameters[:m]) + amount_over_limit
 
     full_priced_items = qualifying_specials * parameters[:n] + remaining_items
     discounted_items = qualifying_specials * parameters[:m]
 
-    cost = full_priced_items * item_cost(item_name) + discounted_items * item_cost(item_name) * (1 - parameters[:x])
-    cost.round 2
+    full_priced_items * item_cost(item_name) + discounted_items * item_cost(item_name) * (1 - parameters[:x])
   end
 
   def calculate_current_total
     @current_total = 0
     current_items.each do |name, amount|
-      @current_total += cost name, amount
+      @current_total += cost(name, amount).round 2
     end
   end
 end
