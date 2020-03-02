@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
 require_relative '../lib/pos_system'
 
 describe POSSystem do
-
   before(:each) do
     @system = POSSystem.new
-    @system.set_cost'soup', 1.89
-    @system.set_cost'crackers', 1.99
+    @system.set_cost 'soup', 1.89
+    @system.set_cost 'crackers', 1.99
     @system.set_cost 'beef', 5.99, true
   end
 
@@ -22,7 +23,7 @@ describe POSSystem do
   end
 
   it 'should allow you to set the cost of an item' do
-    @system.set_cost'soup', 1.00
+    @system.set_cost 'soup', 1.00
     expect(@system.cost('soup', 1)). to eq 1.00
   end
 
@@ -134,6 +135,10 @@ describe POSSystem do
     expect(@system.current_total).to eq 8.78
     @system.scan_item 'soup'
     expect(@system.current_total).to eq 10.00
+
+    @system.set_special 'soup', :n_for_x, { n: 3, x: 5, limit: 3 }
+    @system.calculate_current_total
+    expect(@system.current_total).to eq 10.67
   end
 
   it 'should support a special in the form of Buy N items get M at %X off with and without a limit and calculate the total accordingly' do
