@@ -124,15 +124,11 @@ describe POSSystem do
   it 'should support a special in the form of N for $X and calculate total accordingly' do
     @system.set_special 'soup', :n_for_x, { n: 3, x: 5 }
     @system.scan_item 'soup'
-    expect(@system.current_total).to eq 1.89
     @system.scan_item 'soup'
-    expect(@system.current_total).to eq 3.78
     @system.scan_item 'soup'
     expect(@system.current_total).to eq 5.00
     @system.scan_item 'soup'
-    expect(@system.current_total).to eq 6.89
     @system.scan_item 'soup'
-    expect(@system.current_total).to eq 8.78
     @system.scan_item 'soup'
     expect(@system.current_total).to eq 10.00
 
@@ -145,21 +141,14 @@ describe POSSystem do
     @system.set_cost 'soup', 1.00
     @system.set_special 'soup', :n_get_m_at_x_off, { n: 2, m: 1, x: 0.50 }
     @system.scan_item 'soup'
-    expect(@system.current_total).to eq 1.00
     @system.scan_item 'soup'
-    expect(@system.current_total).to eq 2.00
     @system.scan_item 'soup'
     expect(@system.current_total).to eq 2.50
     @system.scan_item 'soup'
-    expect(@system.current_total).to eq 3.50
     @system.scan_item 'soup'
-    expect(@system.current_total).to eq 4.50
     @system.scan_item 'soup'
-    expect(@system.current_total).to eq 5.00
     @system.scan_item 'soup'
-    expect(@system.current_total).to eq 6.00
     @system.scan_item 'soup'
-    expect(@system.current_total).to eq 7.00
     @system.scan_item 'soup'
     expect(@system.current_total).to eq 7.50
 
